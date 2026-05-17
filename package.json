@@ -13,6 +13,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
     "lucide-react": "^1.16.0",
     "motion": "^12.38.0",
     "posthog-js": "^1.373.5",
