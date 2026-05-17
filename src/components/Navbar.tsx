@@ -46,6 +46,7 @@ export function Navbar({ variant = "static" }: NavbarProps) {
             <Link
               key={item.label}
               to={item.to}
+              aria-current={location.pathname === item.to ? "page" : undefined}
               onClick={() =>
                 trackEvent("nav_click", {
                   label: item.label,
@@ -53,8 +54,10 @@ export function Navbar({ variant = "static" }: NavbarProps) {
                   from: location.pathname,
                 })
               }
-              className={`hover:text-black transition-colors duration-200 ${
-                location.pathname === item.to ? "text-black" : ""
+              className={`transition-colors duration-200 rounded-full px-3 py-1 -mx-3 -my-1 ${
+                location.pathname === item.to
+                  ? "text-black bg-black/5"
+                  : "hover:text-black focus-visible:text-black focus-visible:bg-black/5"
               }`}
             >
               {item.label}

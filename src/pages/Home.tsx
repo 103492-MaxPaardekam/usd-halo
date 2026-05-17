@@ -55,6 +55,9 @@ export function Home() {
                 responsive
                 to="/join"
               />
+              <p className="text-black/60 text-sm leading-relaxed mt-4 max-w-md">
+                No lockups. Full liquidity. Non-custodial access from day one.
+              </p>
 
               <div className="mt-24 w-full max-w-md">
                 <Marquee

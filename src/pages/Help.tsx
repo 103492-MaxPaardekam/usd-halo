@@ -157,14 +157,25 @@ export function Help() {
           Common questions.
         </h2>
         <div className="max-w-3xl mb-8">
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            aria-label="Search help questions"
-            placeholder="Search questions"
-            className="bg-white text-black placeholder:text-black/50 rounded-full px-6 py-2.5 text-base w-full outline-none transition-colors duration-200"
-          />
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              aria-label="Search help questions"
+              placeholder="Search questions"
+              className="bg-white text-black placeholder:text-black/50 rounded-full px-6 py-2.5 text-base w-full outline-none transition-colors duration-200"
+            />
+            {query ? (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="bg-black text-white text-base font-medium px-7 py-2.5 rounded-full hover:bg-gray-800 transition-colors duration-200"
+              >
+                Clear
+              </button>
+            ) : null}
+          </div>
           <p className="text-black/60 text-sm mt-3">
             {filteredFaqs.length} result{filteredFaqs.length === 1 ? "" : "s"}
           </p>

@@ -1,21 +1,33 @@
 import { Link } from "react-router-dom";
 
-const productLinks = [
+type InternalFooterLink = {
+  label: string;
+  to: string;
+};
+
+type ExternalFooterLink = {
+  label: string;
+  href: string;
+};
+
+type CompanyFooterLink = InternalFooterLink | ExternalFooterLink;
+
+const productLinks: InternalFooterLink[] = [
   { label: "Network", to: "/network" },
   { label: "Ecosystem", to: "/ecosystem" },
   { label: "Rewards", to: "/rewards" },
 ];
 
-const resourceLinks = [
+const resourceLinks: InternalFooterLink[] = [
   { label: "Help Center", to: "/help" },
   { label: "News", to: "/news" },
-  { label: "Documentation", to: "#" },
+  { label: "Documentation", to: "/help" },
 ];
 
-const companyLinks = [
-  { label: "About", to: "#" },
-  { label: "Careers", to: "#" },
-  { label: "Contact", to: "#" },
+const companyLinks: CompanyFooterLink[] = [
+  { label: "About", to: "/about" },
+  { label: "Careers", to: "/join" },
+  { label: "Contact", href: "mailto:hello@usdhalo.io" },
 ];
 
 export function Footer() {
@@ -53,7 +65,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     to={link.to}
-                    className="text-white/60 text-base hover:text-white transition-colors duration-200"
+                    className="text-white/60 text-base hover:text-white focus-visible:text-white transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -72,7 +84,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     to={link.to}
-                    className="text-white/60 text-base hover:text-white transition-colors duration-200"
+                    className="text-white/60 text-base hover:text-white focus-visible:text-white transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -89,12 +101,21 @@ export function Footer() {
             <ul className="space-y-3">
               {companyLinks.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    className="text-white/60 text-base hover:text-white transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
+                  {"to" in link ? (
+                    <Link
+                      to={link.to}
+                      className="text-white/60 text-base hover:text-white focus-visible:text-white transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-white/60 text-base hover:text-white focus-visible:text-white transition-colors duration-200"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -102,23 +123,23 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="pt-2 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/40 text-sm">
             © {new Date().getFullYear()} USD Halo. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-white/40 text-sm">
-            <a
-              href="#"
-              className="hover:text-white/60 transition-colors duration-200"
+            <Link
+              to="/help"
+              className="hover:text-white/60 focus-visible:text-white/60 transition-colors duration-200"
             >
               Privacy
-            </a>
-            <a
-              href="#"
-              className="hover:text-white/60 transition-colors duration-200"
+            </Link>
+            <Link
+              to="/help"
+              className="hover:text-white/60 focus-visible:text-white/60 transition-colors duration-200"
             >
               Terms
-            </a>
+            </Link>
           </div>
         </div>
       </div>
