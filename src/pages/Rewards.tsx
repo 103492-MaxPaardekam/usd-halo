@@ -1,5 +1,6 @@
 import { CTAButton } from "../components/CTAButton";
 import { SectionContainer } from "../components/SectionContainer";
+import { SectionJumpNav } from "../components/SectionJumpNav";
 
 const steps = [
   {
@@ -64,6 +65,13 @@ const rewardsDataStates = [
   },
 ];
 
+const rewardsJumpItems = [
+  { label: "Mechanics", href: "#rewards-mechanics" },
+  { label: "Compare", href: "#rewards-compare" },
+  { label: "States", href: "#rewards-states" },
+  { label: "Start", href: "#rewards-start" },
+];
+
 export function Rewards() {
   return (
     <>
@@ -83,11 +91,13 @@ export function Rewards() {
             Hold USD Halo and earn automatic, passive yield — no staking, no
             lockups, no manual claiming. Your balance grows every single day.
           </p>
+          <SectionJumpNav items={rewardsJumpItems} className="mt-10" />
         </div>
       </SectionContainer>
 
       {/* Reward Mechanics — Bento Grid */}
-      <SectionContainer py="py-12">
+      <SectionContainer py="py-12" className="scroll-mt-24">
+        <div id="rewards-mechanics" className="sr-only" />
         <span className="text-black/60 text-sm mb-2 block">
           Reward Mechanics
         </span>
@@ -152,7 +162,8 @@ export function Rewards() {
       </SectionContainer>
 
       {/* APY Comparison */}
-      <SectionContainer>
+      <SectionContainer className="scroll-mt-24">
+        <div id="rewards-compare" className="sr-only" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div>
             <span className="text-black/60 text-sm mb-2 block">
@@ -206,7 +217,8 @@ export function Rewards() {
       </SectionContainer>
 
       {/* API Placeholder States */}
-      <SectionContainer>
+      <SectionContainer className="scroll-mt-24">
+        <div id="rewards-states" className="sr-only" />
         <span className="text-black/60 text-sm mb-2 block">
           Integration readiness
         </span>
@@ -243,7 +255,8 @@ export function Rewards() {
       </SectionContainer>
 
       {/* How to Start */}
-      <SectionContainer py="py-12">
+      <SectionContainer py="py-12" className="scroll-mt-24">
+        <div id="rewards-start" className="sr-only" />
         <span className="text-black/60 text-sm mb-2 block">
           Getting Started
         </span>

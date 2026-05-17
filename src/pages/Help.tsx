@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Rocket, Wallet, TrendingUp, Shield, ChevronDown } from "lucide-react";
 import { SectionContainer } from "../components/SectionContainer";
+import { SectionJumpNav } from "../components/SectionJumpNav";
 
 const categories = [
   {
@@ -60,6 +61,12 @@ const faqs = [
     answer:
       "Withdrawals are processed instantly on-chain. Connect your wallet, choose the amount you'd like to redeem, and confirm the transaction. Your USDC is returned to your wallet in the same block — no waiting period, no approval queue.",
   },
+];
+
+const helpJumpItems = [
+  { label: "Topics", href: "#help-topics" },
+  { label: "FAQ", href: "#help-faq" },
+  { label: "Contact", href: "#help-contact" },
 ];
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
@@ -123,11 +130,16 @@ export function Help() {
             Browse common topics, explore our FAQ, or reach out to the team
             directly. We're here to make sure you get the most out of USD Halo.
           </p>
+          <SectionJumpNav
+            items={helpJumpItems}
+            className="justify-center mt-10"
+          />
         </div>
       </SectionContainer>
 
       {/* Category Cards */}
-      <SectionContainer py="py-12">
+      <SectionContainer py="py-12" className="scroll-mt-24">
+        <div id="help-topics" className="sr-only" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {categories.map((cat) => (
             <div
@@ -152,7 +164,8 @@ export function Help() {
       </SectionContainer>
 
       {/* FAQ Section */}
-      <SectionContainer>
+      <SectionContainer className="scroll-mt-24">
+        <div id="help-faq" className="sr-only" />
         <h2
           className="text-black text-4xl md:text-5xl font-medium leading-tight mb-12"
           style={{ letterSpacing: "-0.03em" }}
@@ -205,7 +218,8 @@ export function Help() {
       </SectionContainer>
 
       {/* Contact CTA */}
-      <SectionContainer>
+      <SectionContainer className="scroll-mt-24">
+        <div id="help-contact" className="sr-only" />
         <div className="bg-[#2B2644] rounded-2xl p-12 text-center max-w-3xl mx-auto">
           <h2
             className="text-white text-4xl md:text-5xl font-medium leading-tight mb-4"

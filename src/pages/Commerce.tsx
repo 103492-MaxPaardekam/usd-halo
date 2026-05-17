@@ -1,5 +1,6 @@
 import { CTAButton } from "../components/CTAButton";
 import { SectionContainer } from "../components/SectionContainer";
+import { SectionJumpNav } from "../components/SectionJumpNav";
 
 const integrationSteps = [
   {
@@ -64,6 +65,13 @@ const commerceDataStates = [
   },
 ];
 
+const commerceJumpItems = [
+  { label: "Benefits", href: "#commerce-benefits" },
+  { label: "States", href: "#commerce-states" },
+  { label: "Integrate", href: "#commerce-steps" },
+  { label: "Proof", href: "#commerce-proof" },
+];
+
 export function Commerce() {
   return (
     <>
@@ -88,12 +96,14 @@ export function Commerce() {
               loyalty without lifting a finger. Integrate Halo and turn payments
               into a growth engine.
             </p>
+            <SectionJumpNav items={commerceJumpItems} className="mt-10" />
           </div>
         </div>
       </SectionContainer>
 
       {/* Merchant Benefits — Bento Grid */}
-      <SectionContainer py="py-12">
+      <SectionContainer py="py-12" className="scroll-mt-24">
+        <div id="commerce-benefits" className="sr-only" />
         <h2
           className="text-black text-4xl md:text-5xl font-medium leading-tight mb-12"
           style={{ letterSpacing: "-0.03em" }}
@@ -155,7 +165,8 @@ export function Commerce() {
       </SectionContainer>
 
       {/* API Placeholder States */}
-      <SectionContainer py="py-12">
+      <SectionContainer py="py-12" className="scroll-mt-24">
+        <div id="commerce-states" className="sr-only" />
         <span className="text-black/60 text-sm mb-2 block">
           Integration readiness
         </span>
@@ -192,7 +203,8 @@ export function Commerce() {
       </SectionContainer>
 
       {/* Integration Steps */}
-      <SectionContainer>
+      <SectionContainer className="scroll-mt-24">
+        <div id="commerce-steps" className="sr-only" />
         <h2
           className="text-black text-4xl md:text-5xl font-medium leading-tight mb-12"
           style={{ letterSpacing: "-0.03em" }}
@@ -226,7 +238,8 @@ export function Commerce() {
       </SectionContainer>
 
       {/* Case Studies */}
-      <SectionContainer py="py-12">
+      <SectionContainer py="py-12" className="scroll-mt-24">
+        <div id="commerce-proof" className="sr-only" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div>
             <h2
