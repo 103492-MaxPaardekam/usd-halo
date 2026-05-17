@@ -1,4 +1,4 @@
-import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Component, type ReactNode } from "react";
 import { CTAButton } from "./CTAButton";
 import { SectionContainer } from "./SectionContainer";
 
@@ -22,7 +22,7 @@ export class ErrorBoundary extends Component<
     return { hasError: true };
   }
 
-  public componentDidCatch(_error: Error, _errorInfo: ErrorInfo): void {
+  public componentDidCatch(): void {
     // Reserved for future error reporting integration.
   }
 

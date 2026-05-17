@@ -150,7 +150,11 @@ export function Wallet() {
                 >
                   Copy address
                 </button>
-                <p className="text-white/60 text-sm mt-3" role="status" aria-live="polite">
+                <p
+                  className="text-white/60 text-sm mt-3"
+                  role="status"
+                  aria-live="polite"
+                >
                   {copyStatus === "copied"
                     ? "Address copied."
                     : copyStatus === "error"

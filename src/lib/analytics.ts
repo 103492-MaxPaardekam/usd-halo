@@ -1,3 +1,5 @@
+import { runtimeConfig } from "../config/runtime";
+
 type AnalyticsValue = string | number | boolean | null | undefined;
 
 type AnalyticsPayload = Record<string, AnalyticsValue>;
@@ -12,7 +14,7 @@ declare global {
 }
 
 function getProvider() {
-  return (import.meta.env.VITE_ANALYTICS_PROVIDER ?? "none").toLowerCase();
+  return runtimeConfig.analyticsProvider;
 }
 
 export function trackEvent(eventName: string, payload: AnalyticsPayload = {}) {
