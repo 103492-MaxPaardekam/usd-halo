@@ -190,7 +190,7 @@ export function Join() {
               }}
               aria-label="Email address"
               aria-invalid={status === "error"}
-              className="bg-white/10 text-white placeholder:text-white/40 rounded-full px-6 py-2.5 text-base flex-1 max-w-sm outline-none transition-colors duration-200"
+              className="bg-white/10 text-white placeholder:text-white/40 rounded-full px-6 py-2.5 text-base flex-1 max-w-sm"
               placeholder="Your email"
               autoComplete="email"
               required
