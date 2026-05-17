@@ -5,12 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "backend:dev": "node --watch server/index.js",
+    "backend:start": "node server/index.js",
+    "backend:test": "node --test server/tests/*.test.js",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "test": "vitest",
     "test:run": "vitest run",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:check": "npm run lint && npm run test:run && npm run backend:test && npm run build"
   },
   "dependencies": {
     "cors": "^2.8.6",
