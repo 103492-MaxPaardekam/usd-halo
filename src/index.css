@@ -57,3 +57,10 @@ body {
   width: max-content;
   animation: backers-marquee 30s linear infinite;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .backers-track {
+    animation: none;
+  }
+}

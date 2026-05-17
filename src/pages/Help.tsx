@@ -76,7 +76,10 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         className="w-full flex items-center justify-between text-left transition-colors duration-200 hover:text-black/70"
       >
         <span className="text-black text-lg font-medium pr-4">{question}</span>
-        <ChevronDown className="w-5 h-5 text-black/50 shrink-0" />
+        <span className="inline-flex items-center gap-2 text-black/50 text-sm">
+          {open ? "Hide" : "Show"}
+          <ChevronDown className="w-5 h-5 text-black/50 shrink-0" />
+        </span>
       </button>
       {open ? (
         <div id={contentId} className="pt-5">
