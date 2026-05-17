@@ -47,6 +47,27 @@ const MOCK_WALLET_ADDRESS = "0x9e4f8a12b0d3c56a77f0e2a9b83c4d11f2a98b7c";
 
 type CopyStatus = "idle" | "copied" | "error";
 
+const walletDataStates = [
+  {
+    name: "Loading state",
+    title: "Fetching wallet balances",
+    description:
+      "Use this state while balance, rewards, and transaction data are being retrieved.",
+  },
+  {
+    name: "Empty state",
+    title: "No wallet activity yet",
+    description:
+      "Use this state for first-time wallets with no deposits, rewards, or activity history.",
+  },
+  {
+    name: "Error state",
+    title: "Unable to load wallet data",
+    description:
+      "Use this state when wallet APIs fail and provide a retry action for recovery.",
+  },
+];
+
 export function Wallet() {
   const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
 
@@ -141,6 +162,42 @@ export function Wallet() {
               </button>
             </div>
           </div>
+        </div>
+      </SectionContainer>
+
+      {/* API Placeholder States */}
+      <SectionContainer>
+        <span className="text-black/60 text-sm mb-2 block">
+          Integration readiness
+        </span>
+        <h2
+          className="text-black text-4xl md:text-5xl font-medium leading-tight mb-12"
+          style={{ letterSpacing: "-0.03em" }}
+        >
+          Data states, ready.
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {walletDataStates.map((state) => (
+            <div
+              key={state.name}
+              className="bg-white rounded-2xl p-7 min-h-64 flex flex-col justify-between"
+            >
+              <span className="text-black/50 text-sm block mb-3">
+                {state.name}
+              </span>
+              <div>
+                <h3
+                  className="text-black text-2xl font-medium mb-3"
+                  style={{ letterSpacing: "-0.02em" }}
+                >
+                  {state.title}
+                </h3>
+                <p className="text-black/60 text-base leading-relaxed">
+                  {state.description}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </SectionContainer>
 

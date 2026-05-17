@@ -43,6 +43,27 @@ const comparisons = [
   },
 ];
 
+const rewardsDataStates = [
+  {
+    name: "Loading state",
+    title: "Calculating live APY",
+    description:
+      "Use while strategy data and reserve metrics are being fetched from external providers.",
+  },
+  {
+    name: "Empty state",
+    title: "No rewards available yet",
+    description:
+      "Use when a connected wallet has no eligible balance and has not started accrual.",
+  },
+  {
+    name: "Error state",
+    title: "Reward feed unavailable",
+    description:
+      "Use when reward services fail, with retry and support guidance for next action.",
+  },
+];
+
 export function Rewards() {
   return (
     <>
@@ -181,6 +202,43 @@ export function Rewards() {
               </div>
             ))}
           </div>
+        </div>
+      </SectionContainer>
+
+      {/* API Placeholder States */}
+      <SectionContainer>
+        <span className="text-black/60 text-sm mb-2 block">
+          Integration readiness
+        </span>
+        <h2
+          className="text-black text-4xl md:text-5xl font-medium leading-tight mb-12"
+          style={{ letterSpacing: "-0.03em" }}
+        >
+          Reward data states.
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {rewardsDataStates.map((state) => (
+            <div
+              key={state.name}
+              className="bg-white rounded-2xl p-7 min-h-64 flex flex-col justify-between"
+            >
+              <span className="text-black/50 text-sm block mb-3">
+                {state.name}
+              </span>
+              <div>
+                <h3
+                  className="text-black text-2xl font-medium mb-3"
+                  style={{ letterSpacing: "-0.02em" }}
+                >
+                  {state.title}
+                </h3>
+                <p className="text-black/60 text-base leading-relaxed">
+                  {state.description}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </SectionContainer>
 

@@ -43,6 +43,27 @@ const caseStudies = [
   },
 ];
 
+const commerceDataStates = [
+  {
+    name: "Loading state",
+    title: "Fetching integration health",
+    description:
+      "Use while commerce endpoints, settlement status, and webhook delivery metrics are loading.",
+  },
+  {
+    name: "Empty state",
+    title: "No transactions yet",
+    description:
+      "Use when a merchant account is connected but has not processed any Halo payments.",
+  },
+  {
+    name: "Error state",
+    title: "Integration status unavailable",
+    description:
+      "Use when payment diagnostics fail and surface a retry path for developers.",
+  },
+];
+
 export function Commerce() {
   return (
     <>
@@ -133,6 +154,43 @@ export function Commerce() {
         </div>
       </SectionContainer>
 
+      {/* API Placeholder States */}
+      <SectionContainer py="py-12">
+        <span className="text-black/60 text-sm mb-2 block">
+          Integration readiness
+        </span>
+        <h2
+          className="text-black text-4xl md:text-5xl font-medium leading-tight mb-12"
+          style={{ letterSpacing: "-0.03em" }}
+        >
+          Commerce data states.
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {commerceDataStates.map((state) => (
+            <div
+              key={state.name}
+              className="bg-white rounded-2xl p-7 min-h-64 flex flex-col justify-between"
+            >
+              <span className="text-black/50 text-sm block mb-3">
+                {state.name}
+              </span>
+              <div>
+                <h3
+                  className="text-black text-2xl font-medium mb-3"
+                  style={{ letterSpacing: "-0.02em" }}
+                >
+                  {state.title}
+                </h3>
+                <p className="text-black/60 text-base leading-relaxed">
+                  {state.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </SectionContainer>
+
       {/* Integration Steps */}
       <SectionContainer>
         <h2
@@ -186,10 +244,7 @@ export function Commerce() {
 
           <div className="flex flex-col gap-4">
             {caseStudies.map((study) => (
-              <div
-                key={study.title}
-                className="bg-[#2B2644] rounded-2xl p-7"
-              >
+              <div key={study.title} className="bg-[#2B2644] rounded-2xl p-7">
                 <h3
                   className="text-white text-2xl font-medium mb-2"
                   style={{ letterSpacing: "-0.02em" }}
