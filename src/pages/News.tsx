@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SectionContainer } from "../components/SectionContainer";
+import { submitWaitlistSignup } from "../services/waitlist";
 
 const articles = [
   {
@@ -47,6 +50,39 @@ const articles = [
 ];
 
 export function News() {
+  const [email, setEmail] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateEmail = (value: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!validateEmail(email)) {
+      setStatusMessage("Please enter a valid email address.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatusMessage("");
+
+    try {
+      const result = await submitWaitlistSignup(email);
+      setStatusMessage(
+        result === "exists"
+          ? "You're already subscribed to updates."
+          : "You're subscribed. We'll keep you updated.",
+      );
+      setEmail("");
+    } catch {
+      setStatusMessage("Subscription failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       {/* Page Hero */}
@@ -83,15 +119,15 @@ export function News() {
               </p>
             </div>
             <div className="mt-6">
-              <a
-                href="#"
+              <Link
+                to="/help"
                 className="inline-flex items-center gap-3 text-white text-base font-medium group"
               >
                 <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-200">
                   <ArrowRight className="w-4 h-4 text-white" />
                 </div>
                 Read more
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -116,15 +152,15 @@ export function News() {
               </div>
               <div className="flex items-center justify-between mt-6">
                 <span className="text-black/50 text-sm">{article.category}</span>
-                <a
-                  href="#"
+                <Link
+                  to="/help"
                   className="inline-flex items-center gap-3 text-black text-base font-medium group"
                 >
                   <div className="w-9 h-9 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-black/10 transition-colors duration-200">
                     <ArrowRight className="w-4 h-4 text-black" />
                   </div>
                   Read more
-                </a>
+                </Link>
               </div>
             </div>
           ))}
@@ -144,15 +180,38 @@ export function News() {
             Get protocol updates, partnership news, and reward announcements
             delivered straight to your inbox.
           </p>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+          >
             <input
+              type="email"
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+                if (statusMessage) {
+                  setStatusMessage("");
+                }
+              }}
+              aria-label="Email address"
               className="bg-white/10 text-white placeholder:text-white/40 rounded-full px-6 py-2.5 text-base flex-1 max-w-sm outline-none border border-white/10 focus:border-white/30 transition-colors duration-200"
               placeholder="Your email"
+              autoComplete="email"
+              required
             />
-            <button className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200">
-              Subscribe
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200 disabled:bg-white/80"
+            >
+              {isSubmitting ? "Subscribing..." : "Subscribe"}
             </button>
-          </div>
+          </form>
+          {statusMessage ? (
+            <p className="text-white/60 text-base leading-relaxed mt-4" role="status" aria-live="polite">
+              {statusMessage}
+            </p>
+          ) : null}
         </div>
       </SectionContainer>
     </>
