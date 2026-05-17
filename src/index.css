@@ -1,24 +1,25 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'TT Norms Pro';
-  src: url('/fonts/tt-norms-pro-regular.woff2') format('woff2');
+  font-family: "TT Norms Pro";
+  src: local("TT Norms Pro"), local("TTNormsPro-Regular");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'TT Norms Pro';
-  src: url('/fonts/tt-norms-pro-semibold.woff2') format('woff2');
+  font-family: "TT Norms Pro";
+  src: local("TT Norms Pro"), local("TTNormsPro-SemiBold");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
-html, body {
-  font-family: 'TT Norms Pro', ui-sans-serif, system-ui, sans-serif;
-  background-color: #F5F5F5;
+html,
+body {
+  font-family: "TT Norms Pro", ui-sans-serif, system-ui, sans-serif;
+  background-color: #f5f5f5;
   margin: 0;
   padding: 0;
 }
@@ -28,13 +29,21 @@ html, body {
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes backers-marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .marquee-track {
@@ -48,4 +57,3 @@ html, body {
   width: max-content;
   animation: backers-marquee 30s linear infinite;
 }
-
