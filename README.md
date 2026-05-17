@@ -53,8 +53,8 @@ Endpoints:
 
 - `GET /api/health`: health check.
 - `POST /api/waitlist`: accepteert `{ "email": "..." }`.
-	- Response `201 { status: "created" }` voor nieuwe signup.
-	- Response `200 { status: "exists" }` voor bestaande signup.
+  - Response `201 { status: "created" }` voor nieuwe signup.
+  - Response `200 { status: "exists" }` voor bestaande signup.
 - `GET /api/admin/waitlist`: lijst van signups (vereist header `x-admin-token`).
 
 Opslag:
@@ -82,7 +82,7 @@ Opslag:
 1. Start frontend in terminal 1: `npm run dev`.
 2. Start backend in terminal 2: `npm run backend:dev`.
 3. Zet in je `.env` voor frontend:
-	- `VITE_WAITLIST_ENDPOINT=http://localhost:8787/api/waitlist`
+   - `VITE_WAITLIST_ENDPOINT=http://localhost:8787/api/waitlist`
 
 Dan gebruiken Join/News direct de backend in plaats van localStorage fallback.
 
@@ -90,11 +90,11 @@ Dan gebruiken Join/News direct de backend in plaats van localStorage fallback.
 
 1. Bouw frontend: `npm run build`.
 2. Start backend met statische serving:
-	- `API_SERVE_STATIC=true npm run backend:start`
+   - `API_SERVE_STATIC=true npm run backend:start`
 3. Configureer productievariabelen:
-	- `API_CORS_ORIGIN` op je frontend domein.
-	- `API_ADMIN_TOKEN` op een sterke geheime waarde.
-	- `WAITLIST_STORAGE_PATH` op een persistente volume-locatie.
+   - `API_CORS_ORIGIN` op je frontend domein.
+   - `API_ADMIN_TOKEN` op een sterke geheime waarde.
+   - `WAITLIST_STORAGE_PATH` op een persistente volume-locatie.
 
 ## Kwaliteit en CI
 
