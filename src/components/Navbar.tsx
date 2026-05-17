@@ -23,9 +23,18 @@ export function Navbar({ variant = "static" }: NavbarProps) {
       : "relative z-20";
 
   return (
-    <nav className={`${positionClass} px-6 py-5`}>
+    <nav
+      className={`${positionClass} px-6 py-5`}
+      aria-label="Primary navigation"
+    >
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-5 focus:left-6 focus:z-50 bg-black text-white text-base font-medium px-7 py-2.5 rounded-full transition-colors duration-200"
+      >
+        Skip to content
+      </a>
       <div className="max-w-[88rem] mx-auto flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" aria-label="Halo home" className="flex items-center gap-2">
           <LogoIcon />
           <span className="text-2xl font-medium tracking-tight text-black">
             Halo

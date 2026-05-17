@@ -144,12 +144,13 @@ export function Wallet() {
                   $0.00
                 </p>
                 <button
+                  type="button"
                   onClick={handleCopyAddress}
                   className="mt-5 bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200"
                 >
                   Copy address
                 </button>
-                <p className="text-white/60 text-sm mt-3">
+                <p className="text-white/60 text-sm mt-3" role="status" aria-live="polite">
                   {copyStatus === "copied"
                     ? "Address copied."
                     : copyStatus === "error"
@@ -157,7 +158,10 @@ export function Wallet() {
                       : ""}
                 </p>
               </div>
-              <button className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200">
+              <button
+                type="button"
+                className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200"
+              >
                 Deposit
               </button>
             </div>

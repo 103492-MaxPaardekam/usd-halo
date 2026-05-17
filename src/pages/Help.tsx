@@ -64,18 +64,22 @@ const faqs = [
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
+  const contentId = `faq-${question.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
   return (
     <div className="bg-white rounded-2xl p-7">
       <button
+        type="button"
         onClick={() => setOpen((current) => !current)}
+        aria-expanded={open}
+        aria-controls={contentId}
         className="w-full flex items-center justify-between text-left transition-colors duration-200 hover:text-black/70"
       >
         <span className="text-black text-lg font-medium pr-4">{question}</span>
         <ChevronDown className="w-5 h-5 text-black/50 shrink-0" />
       </button>
       {open ? (
-        <div className="pt-5">
+        <div id={contentId} className="pt-5">
           <p className="text-black/70 text-base leading-relaxed max-w-2xl">
             {answer}
           </p>

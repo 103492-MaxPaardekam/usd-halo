@@ -9,6 +9,7 @@ interface CTAButtonProps {
   to?: string;
   responsive?: boolean;
   onClick?: () => void;
+  ariaLabel?: string;
 }
 
 export function CTAButton({
@@ -18,6 +19,7 @@ export function CTAButton({
   to,
   responsive = false,
   onClick,
+  ariaLabel,
 }: CTAButtonProps) {
   const handleClick = () => {
     trackEvent("cta_click", {
@@ -34,6 +36,7 @@ export function CTAButton({
         <Link
           to={to}
           onClick={handleClick}
+          aria-label={ariaLabel ?? label}
           className="inline-flex items-center gap-3 text-black text-base font-medium group"
         >
           <div className="w-9 h-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center group-hover:bg-white transition-colors duration-200">
@@ -48,6 +51,8 @@ export function CTAButton({
       <Tag
         href={href}
         onClick={handleClick}
+        aria-label={ariaLabel ?? label}
+        type={Tag === "button" ? "button" : undefined}
         className="inline-flex items-center gap-3 text-black text-base font-medium group"
       >
         <div className="w-9 h-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center group-hover:bg-white transition-colors duration-200">
@@ -77,14 +82,24 @@ export function CTAButton({
 
   if (to) {
     return (
-      <Link to={to} onClick={handleClick} className={className}>
+      <Link
+        to={to}
+        onClick={handleClick}
+        aria-label={ariaLabel ?? label}
+        className={className}
+      >
         {innerContent}
       </Link>
     );
   }
 
   return (
-    <button onClick={handleClick} className={className}>
+    <button
+      type="button"
+      onClick={handleClick}
+      aria-label={ariaLabel ?? label}
+      className={className}
+    >
       {innerContent}
     </button>
   );

@@ -225,7 +225,11 @@ export function Join() {
             </button>
           </form>
           {message ? (
-            <p className="text-white/60 text-base leading-relaxed mt-4">
+            <p
+              className="text-white/60 text-base leading-relaxed mt-4"
+              role={status === "error" ? "alert" : "status"}
+              aria-live={status === "error" ? "assertive" : "polite"}
+            >
               {message}
             </p>
           ) : null}
