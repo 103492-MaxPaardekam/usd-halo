@@ -1,15 +1,46 @@
 import { useState } from "react";
-import { Wallet as WalletIcon, Shield, Link2, Smartphone, HardDrive, Layers } from "lucide-react";
+import {
+  Wallet as WalletIcon,
+  Shield,
+  Link2,
+  Smartphone,
+  HardDrive,
+  Layers,
+} from "lucide-react";
 import { CTAButton } from "../components/CTAButton";
 import { SectionContainer } from "../components/SectionContainer";
 
 const wallets = [
-  { name: "MetaMask", description: "The most popular browser extension wallet.", icon: Layers },
-  { name: "WalletConnect", description: "Scan a QR code from any compatible mobile wallet.", icon: Link2 },
-  { name: "Coinbase Wallet", description: "Connect directly from the Coinbase app.", icon: Shield },
-  { name: "Rainbow", description: "A beautifully designed wallet for Ethereum.", icon: Smartphone },
-  { name: "Trust Wallet", description: "Multi-chain support with a simple interface.", icon: WalletIcon },
-  { name: "Ledger", description: "Hardware-level security for your assets.", icon: HardDrive },
+  {
+    name: "MetaMask",
+    description: "The most popular browser extension wallet.",
+    icon: Layers,
+  },
+  {
+    name: "WalletConnect",
+    description: "Scan a QR code from any compatible mobile wallet.",
+    icon: Link2,
+  },
+  {
+    name: "Coinbase Wallet",
+    description: "Connect directly from the Coinbase app.",
+    icon: Shield,
+  },
+  {
+    name: "Rainbow",
+    description: "A beautifully designed wallet for Ethereum.",
+    icon: Smartphone,
+  },
+  {
+    name: "Trust Wallet",
+    description: "Multi-chain support with a simple interface.",
+    icon: WalletIcon,
+  },
+  {
+    name: "Ledger",
+    description: "Hardware-level security for your assets.",
+    icon: HardDrive,
+  },
 ];
 
 const MOCK_WALLET_ADDRESS = "0x9e4f8a12b0d3c56a77f0e2a9b83c4d11f2a98b7c";
