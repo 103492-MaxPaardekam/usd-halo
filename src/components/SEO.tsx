@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { trackPageView } from "../lib/analytics";
+import { runtimeConfig } from "../config/runtime";
 
 interface RouteMeta {
   title: string;
@@ -73,19 +74,38 @@ function setMetaTag(selector: string, content: string) {
   }
 }
 
+function setCanonicalLink(href: string) {
+  const existing = document.querySelector<HTMLLinkElement>(
+    'link[rel="canonical"]',
+  );
+
+  if (existing) {
+    existing.setAttribute("href", href);
+    return;
+  }
+
+  const link = document.createElement("link");
+  link.setAttribute("rel", "canonical");
+  link.setAttribute("href", href);
+  document.head.appendChild(link);
+}
+
 export function SEO() {
   const { pathname } = useLocation();
 
   useEffect(() => {
     const routeMeta = ROUTE_META[pathname] ?? DEFAULT_META;
     const fullTitle = `${routeMeta.title} | Halo`;
+    const canonicalUrl = new URL(pathname, runtimeConfig.siteUrl).toString();
 
     document.title = fullTitle;
     setMetaTag('meta[name="description"]', routeMeta.description);
     setMetaTag('meta[property="og:title"]', fullTitle);
     setMetaTag('meta[property="og:description"]', routeMeta.description);
+    setMetaTag('meta[property="og:url"]', canonicalUrl);
     setMetaTag('meta[name="twitter:title"]', fullTitle);
     setMetaTag('meta[name="twitter:description"]', routeMeta.description);
+    setCanonicalLink(canonicalUrl);
     trackPageView(pathname, fullTitle);
   }, [pathname]);
 
