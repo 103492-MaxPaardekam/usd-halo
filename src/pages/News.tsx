@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { SectionContainer } from "../components/SectionContainer";
 import { submitWaitlistSignup } from "../services/waitlist";
 
+type NewsFormStatus = "idle" | "submitting" | "success" | "error";
+
 const articles = [
   {
     date: "May 2026",
@@ -51,8 +53,8 @@ const articles = [
 
 export function News() {
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<NewsFormStatus>("idle");
   const [statusMessage, setStatusMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateEmail = (value: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -61,15 +63,17 @@ export function News() {
     event.preventDefault();
 
     if (!validateEmail(email)) {
+      setStatus("error");
       setStatusMessage("Please enter a valid email address.");
       return;
     }
 
-    setIsSubmitting(true);
+    setStatus("submitting");
     setStatusMessage("");
 
     try {
       const result = await submitWaitlistSignup(email);
+      setStatus("success");
       setStatusMessage(
         result === "exists"
           ? "You're already subscribed to updates."
@@ -77,9 +81,8 @@ export function News() {
       );
       setEmail("");
     } catch {
+      setStatus("error");
       setStatusMessage("Subscription failed. Please try again.");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -196,11 +199,15 @@ export function News() {
               value={email}
               onChange={(event) => {
                 setEmail(event.target.value);
+                if (status !== "idle") {
+                  setStatus("idle");
+                }
                 if (statusMessage) {
                   setStatusMessage("");
                 }
               }}
               aria-label="Email address"
+              aria-invalid={status === "error"}
               className="bg-white/10 text-white placeholder:text-white/40 rounded-full px-6 py-2.5 text-base flex-1 max-w-sm"
               placeholder="Your email"
               autoComplete="email"
@@ -208,17 +215,17 @@ export function News() {
             />
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={status === "submitting"}
               className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200 disabled:bg-white/80"
             >
-              {isSubmitting ? "Subscribing..." : "Subscribe"}
+              {status === "submitting" ? "Subscribing..." : "Subscribe"}
             </button>
           </form>
           {statusMessage ? (
             <p
               className="text-white/60 text-base leading-relaxed mt-4"
-              role="status"
-              aria-live="polite"
+              role={status === "error" ? "alert" : "status"}
+              aria-live={status === "error" ? "assertive" : "polite"}
             >
               {statusMessage}
             </p>
