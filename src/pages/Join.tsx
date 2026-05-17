@@ -3,6 +3,10 @@ import { Sparkles, Vote, Gift } from "lucide-react";
 import { CTAButton } from "../components/CTAButton";
 import { SectionContainer } from "../components/SectionContainer";
 
+const WAITLIST_STORAGE_KEY = "usd-halo-waitlist-signups";
+
+type JoinFormStatus = "idle" | "submitting" | "success" | "error";
+
 const benefits = [
   {
     icon: Sparkles,
@@ -47,6 +51,61 @@ const steps = [
 
 export function Join() {
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<JoinFormStatus>("idle");
+  const [message, setMessage] = useState("");
+
+  const validateEmail = (value: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+  const saveWaitlistEntry = (value: string) => {
+    const normalizedEmail = value.trim().toLowerCase();
+    const raw = localStorage.getItem(WAITLIST_STORAGE_KEY);
+    const parsed: Array<{ email: string; createdAt: string }> = raw
+      ? JSON.parse(raw)
+      : [];
+
+    const exists = parsed.some((entry) => entry.email === normalizedEmail);
+    if (exists) {
+      return "exists" as const;
+    }
+
+    parsed.push({
+      email: normalizedEmail,
+      createdAt: new Date().toISOString(),
+    });
+    localStorage.setItem(WAITLIST_STORAGE_KEY, JSON.stringify(parsed));
+    return "created" as const;
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!validateEmail(email)) {
+      setStatus("error");
+      setMessage("Please enter a valid email address.");
+      return;
+    }
+
+    setStatus("submitting");
+    setMessage("");
+
+    try {
+      // Keep a tiny delay so users perceive successful submission feedback.
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      const result = saveWaitlistEntry(email);
+
+      setStatus("success");
+      setMessage(
+        result === "exists"
+          ? "You're already on the waitlist. We'll keep you posted."
+          : "You're on the waitlist. We'll send updates soon.",
+      );
+      setEmail("");
+    } catch {
+      setStatus("error");
+      setMessage("Something went wrong. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -105,10 +164,7 @@ export function Join() {
           </div>
           <div className="flex flex-col gap-4">
             {steps.map((step) => (
-              <div
-                key={step.number}
-                className="bg-white rounded-2xl p-7"
-              >
+              <div key={step.number} className="bg-white rounded-2xl p-7">
                 <span className="text-black/50 text-sm block mb-2">
                   Step {step.number}
                 </span>
@@ -140,20 +196,39 @@ export function Join() {
             Get updates on launches, rewards, and governance votes.
           </p>
           <form
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
             className="flex flex-col sm:flex-row items-center justify-center gap-3"
           >
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-white/10 text-white placeholder:text-white/40 rounded-full px-6 py-2.5 text-base flex-1 max-w-sm outline-none border border-white/10 focus:border-white/30 transition-colors duration-200"
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (status !== "idle") {
+                  setStatus("idle");
+                  setMessage("");
+                }
+              }}
+              aria-label="Email address"
+              aria-invalid={status === "error"}
+              className="bg-white/10 text-white placeholder:text-white/40 rounded-full px-6 py-2.5 text-base flex-1 max-w-sm outline-none transition-colors duration-200"
               placeholder="Your email"
+              autoComplete="email"
+              required
             />
-            <button className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200">
-              Join waitlist
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200 disabled:bg-white/80"
+            >
+              {status === "submitting" ? "Joining..." : "Join waitlist"}
             </button>
           </form>
+          {message ? (
+            <p className="text-white/60 text-base leading-relaxed mt-4">
+              {message}
+            </p>
+          ) : null}
         </div>
       </SectionContainer>
 

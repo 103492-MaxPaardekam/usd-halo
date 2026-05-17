@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-
 const productLinks = [
   { label: "Network", to: "/network" },
   { label: "Ecosystem", to: "/ecosystem" },

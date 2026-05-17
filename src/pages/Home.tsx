@@ -46,7 +46,12 @@ export function Home() {
                 passive earnings and effortless connection into DeFi.
               </p>
 
-              <CTAButton label="Join us" variant="with-arrow" responsive to="/join" />
+              <CTAButton
+                label="Join us"
+                variant="with-arrow"
+                responsive
+                to="/join"
+              />
 
               <div className="mt-24 w-full max-w-md">
                 <Marquee
@@ -192,7 +197,11 @@ export function Home() {
               </p>
 
               <div>
-                <CTAButton label="Know more" variant="text-link" to="/commerce" />
+                <CTAButton
+                  label="Know more"
+                  variant="text-link"
+                  to="/commerce"
+                />
               </div>
             </div>
           </div>

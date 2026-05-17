@@ -11,10 +11,13 @@ import { Wallet } from "./pages/Wallet";
 import { About } from "./pages/About";
 import { Join } from "./pages/Join";
 import { Commerce } from "./pages/Commerce";
+import { NotFound } from "./pages/NotFound";
+import { SEO } from "./components/SEO";
 
 function App() {
   return (
     <BrowserRouter>
+      <SEO />
       <Routes>
         <Route element={<HomeLayout />}>
           <Route index element={<Home />} />
@@ -29,6 +32,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="join" element={<Join />} />
           <Route path="commerce" element={<Commerce />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
