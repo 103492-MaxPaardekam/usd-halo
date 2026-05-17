@@ -13,10 +13,12 @@ import { Join } from "./pages/Join";
 import { Commerce } from "./pages/Commerce";
 import { NotFound } from "./pages/NotFound";
 import { SEO } from "./components/SEO";
+import { AnalyticsBootstrap } from "./components/AnalyticsBootstrap";
 
 function App() {
   return (
     <BrowserRouter>
+      <AnalyticsBootstrap />
       <SEO />
       <Routes>
         <Route element={<HomeLayout />}>

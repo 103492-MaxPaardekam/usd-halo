@@ -26,6 +26,9 @@ Beschikbare variabelen:
 - `VITE_SITE_URL`: publieke URL van de site.
 - `VITE_API_BASE_URL`: basis-URL voor toekomstige API-integraties.
 - `VITE_ANALYTICS_PROVIDER`: `none`, `gtm`, `posthog` of `auto`.
+- `VITE_GTM_ID`: Google Tag Manager container-id (bijv. `GTM-XXXXXXX`).
+- `VITE_POSTHOG_KEY`: PostHog project key.
+- `VITE_POSTHOG_HOST`: PostHog API host (default EU cloud).
 
 Runtime-resolutie loopt via `src/config/runtime.ts`.
 
@@ -64,4 +67,4 @@ Testconfiguratie staat in `vitest.config.ts` en `src/test/setup.ts`.
 
 ## Opmerking over fonts
 
-Tijdens build kan Vite waarschuwen dat TT Norms fontbestanden op buildtijd niet worden opgelost. Deze referenties worden op runtime geladen vanuit `public/fonts`.
+De app gebruikt lokale TT Norms fallbacks (`local(...)`) zodat builds niet afhangen van ontbrekende binaire fontbestanden in de repository.
