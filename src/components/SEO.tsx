@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { trackPageView } from "../lib/analytics";
 
 interface RouteMeta {
   title: string;
@@ -85,6 +86,7 @@ export function SEO() {
     setMetaTag('meta[property="og:description"]', routeMeta.description);
     setMetaTag('meta[name="twitter:title"]', fullTitle);
     setMetaTag('meta[name="twitter:description"]', routeMeta.description);
+    trackPageView(pathname, fullTitle);
   }, [pathname]);
 
   return null;

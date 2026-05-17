@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { LogoIcon } from "./LogoIcon";
 import { CTAButton } from "./CTAButton";
+import { trackEvent } from "../lib/analytics";
 
 const navItems = [
   { label: "Network", to: "/network" },
@@ -36,6 +37,13 @@ export function Navbar({ variant = "static" }: NavbarProps) {
             <Link
               key={item.label}
               to={item.to}
+              onClick={() =>
+                trackEvent("nav_click", {
+                  label: item.label,
+                  to: item.to,
+                  from: location.pathname,
+                })
+              }
               className={`hover:text-black transition-colors duration-200 ${
                 location.pathname === item.to ? "text-black" : ""
               }`}

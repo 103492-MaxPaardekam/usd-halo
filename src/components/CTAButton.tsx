@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { trackEvent } from "../lib/analytics";
 
 interface CTAButtonProps {
   label: string;
@@ -18,11 +19,21 @@ export function CTAButton({
   responsive = false,
   onClick,
 }: CTAButtonProps) {
+  const handleClick = () => {
+    trackEvent("cta_click", {
+      label,
+      variant,
+      destination: to ?? href ?? "button",
+    });
+    onClick?.();
+  };
+
   if (variant === "text-link") {
     if (to) {
       return (
         <Link
           to={to}
+          onClick={handleClick}
           className="inline-flex items-center gap-3 text-black text-base font-medium group"
         >
           <div className="w-9 h-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center group-hover:bg-white transition-colors duration-200">
@@ -36,7 +47,7 @@ export function CTAButton({
     return (
       <Tag
         href={href}
-        onClick={onClick}
+        onClick={handleClick}
         className="inline-flex items-center gap-3 text-black text-base font-medium group"
       >
         <div className="w-9 h-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center group-hover:bg-white transition-colors duration-200">
@@ -66,14 +77,14 @@ export function CTAButton({
 
   if (to) {
     return (
-      <Link to={to} className={className}>
+      <Link to={to} onClick={handleClick} className={className}>
         {innerContent}
       </Link>
     );
   }
 
   return (
-    <button onClick={onClick} className={className}>
+    <button onClick={handleClick} className={className}>
       {innerContent}
     </button>
   );
