@@ -2,6 +2,7 @@ import { CTAButton } from "../components/CTAButton";
 import { Marquee } from "../components/Marquee";
 import { heroPartners, backerPartners } from "../components/marqueeData";
 import { SectionContainer } from "../components/SectionContainer";
+import heroPoster from "../assets/hero.png";
 
 export function Home() {
   return (
@@ -18,6 +19,8 @@ export function Home() {
               muted
               loop
               playsInline
+              preload="auto"
+              poster={heroPoster}
               className="object-cover absolute inset-0 w-full h-full"
             >
               <source
@@ -175,6 +178,8 @@ export function Home() {
               muted
               loop
               playsInline
+              preload="metadata"
+              poster={heroPoster}
               className="object-cover absolute inset-0 w-full h-full"
             >
               <source

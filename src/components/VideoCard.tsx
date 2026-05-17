@@ -5,6 +5,7 @@ interface VideoCardProps {
   children: ReactNode;
   variant?: "hero" | "section";
   className?: string;
+  poster?: string;
 }
 
 export function VideoCard({
@@ -12,6 +13,7 @@ export function VideoCard({
   children,
   variant = "section",
   className = "",
+  poster,
 }: VideoCardProps) {
   if (variant === "hero") {
     return (
@@ -24,6 +26,8 @@ export function VideoCard({
           muted
           loop
           playsInline
+          preload="auto"
+          poster={poster}
           className="object-cover absolute inset-0 w-full h-full"
         >
           <source src={src} type="video/mp4" />
@@ -44,6 +48,8 @@ export function VideoCard({
         muted
         loop
         playsInline
+        preload="metadata"
+        poster={poster}
         className="object-cover absolute inset-0 w-full h-full"
       >
         <source src={src} type="video/mp4" />
