@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Wallet as WalletIcon, Shield, Link2, Smartphone, HardDrive, Layers } from "lucide-react";
 import { CTAButton } from "../components/CTAButton";
 import { SectionContainer } from "../components/SectionContainer";
@@ -11,7 +12,37 @@ const wallets = [
   { name: "Ledger", description: "Hardware-level security for your assets.", icon: HardDrive },
 ];
 
+const MOCK_WALLET_ADDRESS = "0x9e4f8a12b0d3c56a77f0e2a9b83c4d11f2a98b7c";
+
+type CopyStatus = "idle" | "copied" | "error";
+
 export function Wallet() {
+  const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
+
+  const handleCopyAddress = async () => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(MOCK_WALLET_ADDRESS);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = MOCK_WALLET_ADDRESS;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
+      setCopyStatus("copied");
+      window.setTimeout(() => setCopyStatus("idle"), 2000);
+    } catch {
+      setCopyStatus("error");
+      window.setTimeout(() => setCopyStatus("idle"), 2000);
+    }
+  };
+
   return (
     <>
       {/* Page Hero */}
@@ -44,6 +75,12 @@ export function Wallet() {
               >
                 $0.00
               </p>
+              <div className="mt-6">
+                <p className="text-white/60 text-sm mb-2">Wallet address</p>
+                <p className="text-white/60 text-base leading-relaxed max-w-md break-all">
+                  {MOCK_WALLET_ADDRESS}
+                </p>
+              </div>
             </div>
             <div className="flex flex-col sm:flex-row items-start sm:items-end gap-8">
               <div>
@@ -53,6 +90,19 @@ export function Wallet() {
                   style={{ letterSpacing: "-0.02em" }}
                 >
                   $0.00
+                </p>
+                <button
+                  onClick={handleCopyAddress}
+                  className="mt-5 bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200"
+                >
+                  Copy address
+                </button>
+                <p className="text-white/60 text-sm mt-3">
+                  {copyStatus === "copied"
+                    ? "Address copied."
+                    : copyStatus === "error"
+                      ? "Copy failed."
+                      : ""}
                 </p>
               </div>
               <button className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200">

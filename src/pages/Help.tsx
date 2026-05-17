@@ -72,34 +72,40 @@ function FAQItem({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-black/10">
+    <div className="bg-white rounded-2xl p-7">
       <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-6 text-left transition-colors duration-200 hover:text-black/70"
+        onClick={() => setOpen((current) => !current)}
+        className="w-full flex items-center justify-between text-left transition-colors duration-200 hover:text-black/70"
       >
         <span className="text-black text-lg font-medium pr-4">{question}</span>
-        <ChevronDown
-          className={`w-5 h-5 text-black/50 shrink-0 transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
+        <ChevronDown className="w-5 h-5 text-black/50 shrink-0" />
       </button>
-      <div
-        className={`grid transition-all duration-200 ${
-          open ? "grid-rows-[1fr] pb-6" : "grid-rows-[0fr]"
-        }`}
-      >
-        <div className="overflow-hidden">
+      {open ? (
+        <div className="pt-5">
           <p className="text-black/70 text-base leading-relaxed max-w-2xl">
             {answer}
           </p>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }
 
 export function Help() {
+  const [query, setQuery] = useState("");
+
+  const filteredFaqs = faqs.filter((faq) => {
+    const normalizedQuery = query.trim().toLowerCase();
+    if (!normalizedQuery) {
+      return true;
+    }
+
+    return (
+      faq.question.toLowerCase().includes(normalizedQuery) ||
+      faq.answer.toLowerCase().includes(normalizedQuery)
+    );
+  });
+
   return (
     <>
       {/* Page Hero */}
@@ -152,14 +158,37 @@ export function Help() {
         >
           Common questions.
         </h2>
+        <div className="max-w-3xl mb-8">
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            aria-label="Search help questions"
+            placeholder="Search questions"
+            className="bg-white text-black placeholder:text-black/50 rounded-full px-6 py-2.5 text-base w-full outline-none transition-colors duration-200"
+          />
+          <p className="text-black/60 text-sm mt-3">
+            {filteredFaqs.length} result{filteredFaqs.length === 1 ? "" : "s"}
+          </p>
+        </div>
         <div className="max-w-3xl">
-          {faqs.map((faq) => (
-            <FAQItem
-              key={faq.question}
-              question={faq.question}
-              answer={faq.answer}
-            />
-          ))}
+          {filteredFaqs.length > 0 ? (
+            <div className="flex flex-col gap-4">
+              {filteredFaqs.map((faq) => (
+                <FAQItem
+                  key={faq.question}
+                  question={faq.question}
+                  answer={faq.answer}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="bg-white rounded-2xl p-7">
+              <p className="text-black/70 text-base leading-relaxed max-w-md">
+                No matches found. Try another keyword or browse all questions.
+              </p>
+            </div>
+          )}
         </div>
       </SectionContainer>
 
