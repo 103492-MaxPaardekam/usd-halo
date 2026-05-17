@@ -18,7 +18,7 @@ export function SectionJumpNav({ items, className = "" }: SectionJumpNavProps) {
         <a
           key={item.href}
           href={item.href}
-          className="bg-white text-black/60 text-base font-medium px-7 py-2.5 rounded-full hover:text-black transition-colors duration-200"
+          className="bg-white text-black/60 text-base font-medium px-7 py-2.5 rounded-full hover:text-black focus-visible:text-black focus-visible:bg-black/5 transition-colors duration-200"
         >
           {item.label}
         </a>

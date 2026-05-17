@@ -180,7 +180,7 @@ export function Help() {
               onChange={(event) => setQuery(event.target.value)}
               aria-label="Search help questions"
               placeholder="Search questions"
-              className="bg-white text-black placeholder:text-black/50 rounded-full px-6 py-2.5 text-base w-full outline-none transition-colors duration-200"
+              className="bg-white text-black placeholder:text-black/50 rounded-full px-6 py-2.5 text-base w-full outline-none focus-visible:bg-[#efefef] transition-colors duration-200"
             />
             {query ? (
               <button
