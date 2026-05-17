@@ -4,6 +4,7 @@ interface RuntimeConfig {
   siteUrl: string;
   apiBaseUrl: string;
   analyticsProvider: AnalyticsProvider;
+  waitlistEndpoint: string;
 }
 
 function resolveAnalyticsProvider(
@@ -19,6 +20,7 @@ function resolveAnalyticsProvider(
 export const runtimeConfig: RuntimeConfig = {
   siteUrl: import.meta.env.VITE_SITE_URL ?? "https://usdhalo.io",
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? "https://api.usdhalo.io",
+  waitlistEndpoint: import.meta.env.VITE_WAITLIST_ENDPOINT ?? "",
   analyticsProvider: resolveAnalyticsProvider(
     import.meta.env.VITE_ANALYTICS_PROVIDER,
   ),

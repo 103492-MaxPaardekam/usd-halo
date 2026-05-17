@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Sparkles, Vote, Gift } from "lucide-react";
 import { CTAButton } from "../components/CTAButton";
 import { SectionContainer } from "../components/SectionContainer";
-
-const WAITLIST_STORAGE_KEY = "usd-halo-waitlist-signups";
+import { submitWaitlistSignup } from "../services/waitlist";
 
 type JoinFormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -57,26 +56,6 @@ export function Join() {
   const validateEmail = (value: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
-  const saveWaitlistEntry = (value: string) => {
-    const normalizedEmail = value.trim().toLowerCase();
-    const raw = localStorage.getItem(WAITLIST_STORAGE_KEY);
-    const parsed: Array<{ email: string; createdAt: string }> = raw
-      ? JSON.parse(raw)
-      : [];
-
-    const exists = parsed.some((entry) => entry.email === normalizedEmail);
-    if (exists) {
-      return "exists" as const;
-    }
-
-    parsed.push({
-      email: normalizedEmail,
-      createdAt: new Date().toISOString(),
-    });
-    localStorage.setItem(WAITLIST_STORAGE_KEY, JSON.stringify(parsed));
-    return "created" as const;
-  };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -92,7 +71,7 @@ export function Join() {
     try {
       // Keep a tiny delay so users perceive successful submission feedback.
       await new Promise((resolve) => setTimeout(resolve, 400));
-      const result = saveWaitlistEntry(email);
+      const result = await submitWaitlistSignup(email);
 
       setStatus("success");
       setMessage(
