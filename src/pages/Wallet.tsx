@@ -7,6 +7,7 @@ import {
   HardDrive,
   Layers,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { CTAButton } from "../components/CTAButton";
 import { SectionContainer } from "../components/SectionContainer";
 
@@ -111,7 +112,7 @@ export function Wallet() {
             Connect your wallet to deposit stablecoins, track your balance, and
             start earning rewards — all in one place.
           </p>
-          <CTAButton label="Connect Wallet" variant="with-arrow" />
+          <CTAButton label="Connect Wallet" variant="with-arrow" to="/join" />
         </div>
       </SectionContainer>
 
@@ -162,12 +163,12 @@ export function Wallet() {
                       : ""}
                 </p>
               </div>
-              <button
-                type="button"
+              <Link
+                to="/join"
                 className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200"
               >
                 Deposit
-              </button>
+              </Link>
             </div>
           </div>
         </div>

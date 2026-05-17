@@ -305,7 +305,7 @@ export function Rewards() {
             Put your dollars to work today — passive yield, zero effort, full
             liquidity.
           </p>
-          <CTAButton label="Start earning" variant="with-arrow" />
+          <CTAButton label="Start earning" variant="with-arrow" to="/join" />
         </div>
       </SectionContainer>
     </>
