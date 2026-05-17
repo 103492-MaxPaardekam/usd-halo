@@ -48,6 +48,10 @@ Er is een GitHub Actions workflow op `.github/workflows/ci.yml` met:
 3. `npm run test:run`
 4. `npm run build`
 
+## Projectstatus
+
+Actuele implementatiestatus en resterende externe prelaunch-taken staan in `docs/prelaunch-status.md`.
+
 ## Testdekking (basis)
 
 De huidige testbasis bevat smoke/gedragstests voor:
