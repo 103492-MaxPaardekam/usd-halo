@@ -121,6 +121,7 @@ export function News() {
             <div className="mt-6">
               <Link
                 to="/help"
+                aria-label="Read more about USD Halo Launches on Base"
                 className="inline-flex items-center gap-3 text-white text-base font-medium group"
               >
                 <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-200">
@@ -149,6 +150,9 @@ export function News() {
                 >
                   {article.title}
                 </h3>
+                <p className="text-black/60 text-base leading-relaxed mt-3">
+                  {article.excerpt}
+                </p>
               </div>
               <div className="flex items-center justify-between mt-6">
                 <span className="text-black/50 text-sm">
@@ -156,6 +160,7 @@ export function News() {
                 </span>
                 <Link
                   to="/help"
+                  aria-label={`Read more about ${article.title}`}
                   className="inline-flex items-center gap-3 text-black text-base font-medium group"
                 >
                   <div className="w-9 h-9 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-black/10 transition-colors duration-200">

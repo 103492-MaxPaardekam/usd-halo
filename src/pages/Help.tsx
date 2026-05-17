@@ -231,9 +231,12 @@ export function Help() {
             Our support team is available around the clock. Send us a message
             and we'll get back to you within hours, not days.
           </p>
-          <button className="bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200">
+          <a
+            href="mailto:support@usdhalo.finance"
+            className="inline-flex items-center bg-white text-black text-base font-medium px-7 py-2.5 rounded-full hover:bg-white/90 transition-colors duration-200"
+          >
             Contact us
-          </button>
+          </a>
         </div>
       </SectionContainer>
     </>
