@@ -113,8 +113,8 @@ export function News() {
                 USD Halo Launches on Base
               </h3>
               <p className="text-white/60 text-base leading-relaxed max-w-sm">
-                The protocol is now live on Base, bringing near-zero gas fees and
-                sub-second finality to every holder. Mint, redeem, and earn
+                The protocol is now live on Base, bringing near-zero gas fees
+                and sub-second finality to every holder. Mint, redeem, and earn
                 rewards on Coinbase's L2 from day one.
               </p>
             </div>
@@ -151,7 +151,9 @@ export function News() {
                 </h3>
               </div>
               <div className="flex items-center justify-between mt-6">
-                <span className="text-black/50 text-sm">{article.category}</span>
+                <span className="text-black/50 text-sm">
+                  {article.category}
+                </span>
                 <Link
                   to="/help"
                   className="inline-flex items-center gap-3 text-black text-base font-medium group"
@@ -208,7 +210,11 @@ export function News() {
             </button>
           </form>
           {statusMessage ? (
-            <p className="text-white/60 text-base leading-relaxed mt-4" role="status" aria-live="polite">
+            <p
+              className="text-white/60 text-base leading-relaxed mt-4"
+              role="status"
+              aria-live="polite"
+            >
               {statusMessage}
             </p>
           ) : null}
