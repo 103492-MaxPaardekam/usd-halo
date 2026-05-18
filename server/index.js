@@ -20,8 +20,13 @@ const app = createApp({
   adminApiToken: process.env.API_ADMIN_TOKEN ?? "",
   serveStatic: process.env.API_SERVE_STATIC === "true",
   staticDistPath,
-  rateLimitWindowMs: resolveNumber(process.env.API_RATE_LIMIT_WINDOW_MS, 60_000),
+  rateLimitWindowMs: resolveNumber(
+    process.env.API_RATE_LIMIT_WINDOW_MS,
+    60_000,
+  ),
   rateLimitMax: resolveNumber(process.env.API_RATE_LIMIT_MAX, 60),
+  appVersion:
+    process.env.APP_VERSION ?? process.env.npm_package_version ?? "dev",
   logger: console,
 });
 

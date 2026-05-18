@@ -1,6 +1,7 @@
 import { runtimeConfig } from "../config/runtime";
 
 const WAITLIST_STORAGE_KEY = "usd-halo-waitlist-signups";
+const WAITLIST_REQUEST_TIMEOUT_MS = 6000;
 
 type WaitlistResult = "created" | "exists";
 
@@ -28,17 +29,33 @@ function saveWaitlistEntryLocally(email: string): WaitlistResult {
 export async function submitWaitlistSignup(
   email: string,
 ): Promise<WaitlistResult> {
+  const normalizedEmail = email.trim().toLowerCase();
+
   if (!runtimeConfig.waitlistEndpoint) {
-    return saveWaitlistEntryLocally(email);
+    return saveWaitlistEntryLocally(normalizedEmail);
   }
 
-  const response = await fetch(runtimeConfig.waitlistEndpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email: email.trim().toLowerCase() }),
-  });
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => {
+    controller.abort();
+  }, WAITLIST_REQUEST_TIMEOUT_MS);
+
+  let response: Response;
+
+  try {
+    response = await fetch(runtimeConfig.waitlistEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: normalizedEmail }),
+      signal: controller.signal,
+    });
+  } catch {
+    return saveWaitlistEntryLocally(normalizedEmail);
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
 
   if (!response.ok) {
     throw new Error("Waitlist submission failed");

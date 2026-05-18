@@ -20,6 +20,9 @@
 16. Video-optimalisatie met poster en preload-hints.
 17. JSON-LD structured data voor Organization en WebSite in HTML shell.
 18. Projectdocumentatie bijgewerkt in README (Nederlands).
+19. Productieklare backend API met persistent waitlist-opslag, rate limiting en admin-export (JSON + CSV).
+20. Full-stack deploy-check script (`deploy:check`) met frontend + backend teststappen.
+21. Docker deployment flow toegevoegd met statische frontend serving via backend.
 
 ## Handmatig of extern (niet volledig in code af te ronden)
 
@@ -27,14 +30,14 @@
    - `VITE_SITE_URL`
    - `public/robots.txt`
    - `public/sitemap.xml`
-2. Backend endpoint voor waitlist configureren via `VITE_WAITLIST_ENDPOINT`.
-3. Analytics provider keys invullen (`VITE_GTM_ID` of `VITE_POSTHOG_KEY` + host).
-4. Lighthouse baseline draaien in target-omgeving en scoregrenzen vastleggen.
+2. Analytics provider keys invullen (`VITE_GTM_ID` of `VITE_POSTHOG_KEY` + host).
+3. Lighthouse baseline draaien in target-omgeving en scoregrenzen vastleggen.
 
 ## Definition of Done voor prelaunch
 
 1. `npm run lint` slaagt.
 2. `npm run test:run` slaagt.
-3. `npm run build` slaagt.
-4. CI-workflow slaagt op de hoofdbranch.
-5. Externe configuraties hierboven zijn ingevuld en gevalideerd.
+3. `npm run backend:test` slaagt.
+4. `npm run build` slaagt.
+5. CI-workflow slaagt op de hoofdbranch.
+6. Externe configuraties hierboven zijn ingevuld en gevalideerd.

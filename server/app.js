@@ -89,7 +89,11 @@ class WaitlistStore {
         email: normalizedEmail,
         createdAt: new Date().toISOString(),
       });
-      await writeFile(this.filePath, `${JSON.stringify(entries, null, 2)}\n`, "utf8");
+      await writeFile(
+        this.filePath,
+        `${JSON.stringify(entries, null, 2)}\n`,
+        "utf8",
+      );
       return "created";
     };
 
@@ -117,6 +121,15 @@ function createCorsMiddleware(corsOrigin) {
   });
 }
 
+function escapeCsvValue(value) {
+  const normalized = String(value ?? "");
+  if (/[",\n]/.test(normalized)) {
+    return `"${normalized.replaceAll('"', '""')}"`;
+  }
+
+  return normalized;
+}
+
 export function createApp(options) {
   const {
     waitlistFilePath,
@@ -127,6 +140,7 @@ export function createApp(options) {
     rateLimitWindowMs,
     rateLimitMax,
     logger,
+    appVersion,
   } = options;
 
   const app = express();
@@ -148,12 +162,19 @@ export function createApp(options) {
   );
 
   app.get("/api/health", (_req, res) => {
-    res.json({ status: "ok" });
+    res.json({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+      uptimeSeconds: Math.round(process.uptime()),
+      version: appVersion,
+    });
   });
 
   app.post("/api/waitlist", async (req, res) => {
     const email =
-      typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
+      typeof req.body?.email === "string"
+        ? req.body.email.trim().toLowerCase()
+        : "";
 
     if (!email || email.length > 320 || !EMAIL_REGEX.test(email)) {
       res.status(400).json({ error: "invalid_email" });
@@ -186,6 +207,39 @@ export function createApp(options) {
       res.json({ count: entries.length, entries });
     } catch (error) {
       logger.error("Waitlist read failed", error);
+      res.status(500).json({ error: "internal_error" });
+    }
+  });
+
+  app.get("/api/admin/waitlist.csv", async (req, res) => {
+    if (!adminApiToken) {
+      res.status(404).json({ error: "not_found" });
+      return;
+    }
+
+    const incomingToken = req.get("x-admin-token");
+    if (!incomingToken || incomingToken !== adminApiToken) {
+      res.status(401).json({ error: "unauthorized" });
+      return;
+    }
+
+    try {
+      const entries = await store.list();
+      const lines = ["email,createdAt"];
+
+      for (const entry of entries) {
+        lines.push(
+          `${escapeCsvValue(entry.email)},${escapeCsvValue(entry.createdAt)}`,
+        );
+      }
+
+      res
+        .status(200)
+        .set("Content-Type", "text/csv; charset=utf-8")
+        .set("Content-Disposition", 'attachment; filename="waitlist.csv"')
+        .send(`${lines.join("\n")}\n`);
+    } catch (error) {
+      logger.error("Waitlist CSV export failed", error);
       res.status(500).json({ error: "internal_error" });
     }
   });

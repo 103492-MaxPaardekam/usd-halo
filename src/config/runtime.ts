@@ -23,7 +23,7 @@ function resolveAnalyticsProvider(
 export const runtimeConfig: RuntimeConfig = {
   siteUrl: import.meta.env.VITE_SITE_URL ?? "https://usdhalo.io",
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? "https://api.usdhalo.io",
-  waitlistEndpoint: import.meta.env.VITE_WAITLIST_ENDPOINT ?? "",
+  waitlistEndpoint: import.meta.env.VITE_WAITLIST_ENDPOINT ?? "/api/waitlist",
   gtmId: import.meta.env.VITE_GTM_ID ?? "",
   posthogKey: import.meta.env.VITE_POSTHOG_KEY ?? "",
   posthogHost: import.meta.env.VITE_POSTHOG_HOST ?? "https://eu.i.posthog.com",

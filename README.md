@@ -52,10 +52,12 @@ De backend staat in `server/`.
 Endpoints:
 
 - `GET /api/health`: health check.
+  - Response bevat `status`, `timestamp`, `uptimeSeconds`, `version`.
 - `POST /api/waitlist`: accepteert `{ "email": "..." }`.
   - Response `201 { status: "created" }` voor nieuwe signup.
   - Response `200 { status: "exists" }` voor bestaande signup.
 - `GET /api/admin/waitlist`: lijst van signups (vereist header `x-admin-token`).
+- `GET /api/admin/waitlist.csv`: CSV-export (vereist header `x-admin-token`).
 
 Opslag:
 
@@ -81,10 +83,9 @@ Opslag:
 
 1. Start frontend in terminal 1: `npm run dev`.
 2. Start backend in terminal 2: `npm run backend:dev`.
-3. Zet in je `.env` voor frontend:
-   - `VITE_WAITLIST_ENDPOINT=http://localhost:8787/api/waitlist`
+3. `VITE_WAITLIST_ENDPOINT` staat standaard op `/api/waitlist`.
 
-Dan gebruiken Join/News direct de backend in plaats van localStorage fallback.
+De Vite dev-server proxyt `/api` automatisch naar `http://localhost:8787`, zodat Join/News direct de backend gebruiken zonder extra configuratie.
 
 ## Deploy advies
 
@@ -96,6 +97,24 @@ Dan gebruiken Join/News direct de backend in plaats van localStorage fallback.
    - `API_ADMIN_TOKEN` op een sterke geheime waarde.
    - `WAITLIST_STORAGE_PATH` op een persistente volume-locatie.
 
+## Docker deploy
+
+Build image:
+
+```bash
+docker build -t usd-halo:latest .
+```
+
+Run container:
+
+```bash
+docker run --rm -p 8787:8787 \
+   -e API_ADMIN_TOKEN=replace-with-strong-token \
+   -e API_CORS_ORIGIN=https://your-domain.tld \
+   -v $(pwd)/data:/app/data \
+   usd-halo:latest
+```
+
 ## Kwaliteit en CI
 
 Er is een GitHub Actions workflow op `.github/workflows/ci.yml` met:
@@ -103,7 +122,8 @@ Er is een GitHub Actions workflow op `.github/workflows/ci.yml` met:
 1. `npm ci`
 2. `npm run lint`
 3. `npm run test:run`
-4. `npm run build`
+4. `npm run backend:test`
+5. `npm run build`
 
 ## Projectstatus
 

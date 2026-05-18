@@ -38,6 +38,7 @@ test.before(async () => {
     staticDistPath: path.join(tempDir, "dist"),
     rateLimitWindowMs: 60_000,
     rateLimitMax: 10_000,
+    appVersion: "test",
     logger: console,
   });
 
@@ -57,6 +58,9 @@ test("GET /api/health returns ok", async () => {
 
   assert.equal(response.status, 200);
   assert.equal(data.status, "ok");
+  assert.equal(data.version, "test");
+  assert.equal(typeof data.timestamp, "string");
+  assert.equal(typeof data.uptimeSeconds, "number");
 });
 
 test("POST /api/waitlist validates email", async () => {
@@ -104,4 +108,28 @@ test("GET /api/admin/waitlist requires token", async () => {
   assert.equal(authorized.status, 200);
   assert.ok(Array.isArray(data.entries));
   assert.equal(typeof data.count, "number");
+});
+
+test("GET /api/admin/waitlist.csv exports CSV with token", async () => {
+  await fetch(`${baseUrl}/api/waitlist`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: "csv@example.com" }),
+  });
+
+  const unauthorized = await fetch(`${baseUrl}/api/admin/waitlist.csv`);
+  assert.equal(unauthorized.status, 401);
+
+  const authorized = await fetch(`${baseUrl}/api/admin/waitlist.csv`, {
+    headers: { "x-admin-token": "test-token" },
+  });
+  const csv = await authorized.text();
+
+  assert.equal(authorized.status, 200);
+  assert.equal(
+    authorized.headers.get("content-type"),
+    "text/csv; charset=utf-8",
+  );
+  assert.match(csv, /^email,createdAt\n/);
+  assert.match(csv, /csv@example.com/);
 });

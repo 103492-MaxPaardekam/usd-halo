@@ -1,23 +1,23 @@
 import "@testing-library/jest-dom/vitest";
 
 class MockIntersectionObserver implements IntersectionObserver {
-	readonly root: Element | Document | null = null;
-	readonly rootMargin = "0px";
-	readonly scrollMargin = "0px";
-	readonly thresholds: ReadonlyArray<number> = [0];
+  readonly root: Element | Document | null = null;
+  readonly rootMargin = "0px";
+  readonly scrollMargin = "0px";
+  readonly thresholds: ReadonlyArray<number> = [0];
 
-	disconnect(): void {}
+  disconnect(): void {}
 
-	observe(): void {}
+  observe(): void {}
 
-	takeRecords(): IntersectionObserverEntry[] {
-		return [];
-	}
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
 
-	unobserve(): void {}
+  unobserve(): void {}
 }
 
 if (!globalThis.IntersectionObserver) {
-	globalThis.IntersectionObserver =
-		MockIntersectionObserver as typeof IntersectionObserver;
+  globalThis.IntersectionObserver =
+    MockIntersectionObserver as typeof IntersectionObserver;
 }
