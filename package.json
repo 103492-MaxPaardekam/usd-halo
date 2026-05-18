@@ -10,7 +10,7 @@
     "backend:test": "node --test server/tests/*.test.js",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
-    "lint": "eslint .",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"server/**/*.js\" eslint.config.js vite.config.ts vitest.config.ts",
     "test": "vitest",
     "test:run": "vitest run",
     "preview": "vite preview",
